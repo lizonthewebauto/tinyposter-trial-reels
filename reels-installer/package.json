@@ -28,14 +28,14 @@
     "installer"
   ],
   "author": "TinyPoster <support@tinyposter.app>",
-  "homepage": "https://tinyposter.app",
+  "homepage": "https://tinyposter.app/reels",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lizonthewebauto/tinyposter.git",
+    "url": "git+https://github.com/lizonthewebauto/tinyposter-trial-reels.git",
     "directory": "reels-installer"
   },
   "bugs": {
-    "url": "https://github.com/lizonthewebauto/tinyposter/issues",
+    "url": "https://github.com/lizonthewebauto/tinyposter-trial-reels/issues",
     "email": "support@tinyposter.app"
   },
   "license": "MIT"
