@@ -1,0 +1,42 @@
+{
+  "name": "tinyposter-reels",
+  "version": "0.1.0",
+  "description": "One-command installer for the Tinyposter Trial Reels skill (Claude Code + Codex)",
+  "type": "module",
+  "bin": {
+    "tinyposter-reels": "bin/tinyposter-reels.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "skill",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "tinyposter",
+    "reels",
+    "shorts",
+    "video",
+    "claude",
+    "claude-code",
+    "codex",
+    "skill",
+    "mcp",
+    "installer"
+  ],
+  "author": "TinyPoster <support@tinyposter.app>",
+  "homepage": "https://tinyposter.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lizonthewebauto/tinyposter.git",
+    "directory": "reels-installer"
+  },
+  "bugs": {
+    "url": "https://github.com/lizonthewebauto/tinyposter/issues",
+    "email": "support@tinyposter.app"
+  },
+  "license": "MIT"
+}

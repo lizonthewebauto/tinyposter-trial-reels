@@ -1,0 +1,6 @@
+node_modules/
+out/
+public/source.*
+.remotion/
+.DS_Store
+reels-installer/skill/

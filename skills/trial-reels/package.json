@@ -1,0 +1,29 @@
+{
+  "name": "tinyposter-trial-reels",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Turn one video into 5 different-looking trial reels and post them with Tinyposter.",
+  "scripts": {
+    "studio": "remotion studio",
+    "analyze": "node scripts/analyze.mjs",
+    "plan": "node scripts/plan.mjs",
+    "render": "node scripts/render.mjs",
+    "post": "node scripts/post.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@remotion/bundler": "^4.0.483",
+    "@remotion/cli": "^4.0.483",
+    "@remotion/renderer": "^4.0.483",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "remotion": "^4.0.483"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "^5.8.0"
+  }
+}
