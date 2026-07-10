@@ -7,7 +7,13 @@
 //   node scripts/post.mjs --check
 //   node scripts/post.mjs --file out/variant-1.mp4 \
 //     --caption-file out/captions/variant-1.txt \
-//     --platforms INSTAGRAM [--title "..."] [--now | --at 2026-07-10T14:30:00-04:00]
+//     --platforms INSTAGRAM [--trial] [--reel] [--title "..."] \
+//     [--now | --at 2026-07-10T14:30:00-04:00]
+//
+//   --trial : post it as an Instagram TRIAL reel (shown only to non-followers
+//             as a test, kept off your main feed). This is the whole point of
+//             trial reels, so it is the default for Instagram here.
+//   --reel  : post as a normal reel (goes to your followers' feed).
 //
 // Auth: set TINYPOSTER_TOKEN (get one at https://tinyposter.app/dashboard/tokens)
 //
@@ -21,7 +27,7 @@ import { parseArgs } from "./lib.mjs";
 const MAX_BYTES = 50 * 1024 * 1024;
 const TITLE_REQUIRED = ["TIKTOK", "YOUTUBE"];
 
-const args = parseArgs(process.argv.slice(2), ["check", "now"]);
+const args = parseArgs(process.argv.slice(2), ["check", "now", "trial", "reel"]);
 const base = (
   args.base ||
   process.env.TINYPOSTER_BASE_URL ||
@@ -84,7 +90,8 @@ if (args.check) {
     const { message } = apiErrorInfo(accounts);
     exit(1, `Could not load your accounts: ${message}\nIs the token right?`);
   }
-  const list = accounts?.accounts ?? accounts ?? [];
+  // GET /api/v1/accounts returns { brand_id, data: [...] }.
+  const list = accounts?.data ?? accounts?.accounts ?? [];
   console.log("Connected accounts:");
   if (!Array.isArray(list) || list.length === 0) {
     console.log(
@@ -185,8 +192,19 @@ if (!uploadId) {
   exit(1, "Upload worked but no id came back. Try again.");
 }
 
-// 2. Create the post.
-console.log(scheduledAt ? `Scheduling for ${scheduledAt}...` : "Posting now...");
+// 2. Create the post. On Instagram, post as a TRIAL reel by default (that is
+// the whole point of this skill): shown to non-followers as a test, kept off
+// the main feed. Pass --reel to post a normal reel to followers instead.
+const asNormalReel = args.reel && !args.trial;
+const options =
+  platforms.includes("INSTAGRAM")
+    ? { INSTAGRAM: { type: "REEL", ...(asNormalReel ? {} : { trial: true }) } }
+    : undefined;
+console.log(
+  scheduledAt
+    ? `Scheduling ${options ? (asNormalReel ? "reel" : "trial reel") : "post"} for ${scheduledAt}...`
+    : `Posting ${options ? (asNormalReel ? "reel" : "trial reel") : "post"} now...`,
+);
 const { res: postRes, data: postData } = await api("POST", "/posts", {
   body: {
     text: caption,
@@ -194,6 +212,7 @@ const { res: postRes, data: postData } = await api("POST", "/posts", {
     media_upload_ids: [uploadId],
     ...(title ? { title } : {}),
     ...(scheduledAt ? { scheduled_at: scheduledAt } : {}),
+    ...(options ? { options } : {}),
   },
   headers: { "Idempotency-Key": randomUUID() },
 });

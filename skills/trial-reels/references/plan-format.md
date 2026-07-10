@@ -80,8 +80,11 @@ numbers can make variants look samey, which defeats the whole point.
 
 Field notes:
 
-- `flip: true` mirrors the footage left-right. Keep it on. It is the
-  cheapest way to make a variant look different.
+- `flip: true` mirrors the footage left-right. It is the cheapest way to
+  make a variant look different, BUT it also mirrors any text inside the
+  video. If the source has readable on-screen text, baked-in captions, or
+  a screen recording, set `"flip": false` on EVERY variant or the text
+  reads backwards. Pure talking-head videos with no text: keep it on.
 - `speed`: 1.1 to 1.25 works best. Audio gets a little higher pitched,
   which is fine for trial reels.
 - `segments` play in the order listed. Reordering rows reorders the reel.

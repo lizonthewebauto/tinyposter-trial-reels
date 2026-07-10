@@ -68,10 +68,19 @@ node scripts/plan.mjs --topic "what the reel is about" --cta "FOLLOW FOR MORE"
 
 Add `--platforms INSTAGRAM,TIKTOK` if the user asked for more than
 Instagram. Add `--target 20` style flags only if the user asked for a
-different length.
+different length. Add `--no-flip` when the video has readable on-screen
+text, baked-in captions, or a screen recording (mirrored text reads
+backwards).
 
 Then open `out/plan.json` and rewrite the TEXT ONLY, guided by
-`references/plan-format.md`:
+`references/plan-format.md`.
+
+One exception to the numbers rule: `flip`. Look at the video first (the
+frames in `out/qa` after a render, or ask the user). If it has readable
+on-screen text, baked-in captions, or a screen recording, set
+`"flip": false` on every variant, or all that text will read backwards.
+
+Rewrite these:
 
 - Every `overlays[].text`: 2 to 5 words, all caps, punchy, tied to the
   user's topic. First overlay is the hook, last is the call to action.

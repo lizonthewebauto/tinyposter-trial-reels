@@ -59,7 +59,9 @@ const HOOK_LINES = [
   "The fast version, no filler.",
 ];
 
-const args = parseArgs(process.argv.slice(2));
+// --no-flip: keep the footage un-mirrored. Use it when the video has
+// readable on-screen text, baked-in captions, or a screen recording.
+const args = parseArgs(process.argv.slice(2), ["no-flip"]);
 const analysis = readJson(
   path.join(OUT_DIR, "analysis.json"),
   'Run: node scripts/analyze.mjs "/path/to/video.mp4" first.',
@@ -219,7 +221,7 @@ for (let i = 1; i <= count; i += 1) {
   variants.push({
     id: i,
     slug: `v${i}-${slugify(overlayTexts[0])}`,
-    flip: true,
+    flip: !args["no-flip"],
     speed,
     segments,
     color: {
